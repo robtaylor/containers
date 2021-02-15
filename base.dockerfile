@@ -32,11 +32,14 @@ RUN apt-get update -qq \
 
 FROM base AS build
 
-RUN apt-get update -qq \
+RUN echo 'deb http://deb.debian.org/debian buster-backports main' >> /etc/apt/sources.list \
+ && apt-get update -qq \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
-    clang \
+    clang-8 \
     git \
-    make
+    make \
+ && ln -s /usr/bin/clang-8 /usr/bin/clang \
+ && ln -s /usr/bin/clang++-8 /usr/bin/clang++
 
 ENV CC clang
 ENV CXX clang++
