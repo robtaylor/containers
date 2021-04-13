@@ -23,10 +23,11 @@ set -e
 
 _baseos="$1"
 _image="$2"
+_registry="$3"
 
 _script="`echo ${_image} | sed 's#:#--#'`"
-if [ -n "$3" ]; then
-  _script="$3"
+if [ -n "$4" ]; then
+  _script="$4"
 fi
 
-docker run --rm -v /$(pwd)://wrk ghcr.io/hdl/"${_baseos}"/"${_image}" //wrk/test/"${_script}".sh
+docker run --rm -v /$(pwd)://wrk ${_registry}/"${_baseos}"/"${_image}" //wrk/test/"${_script}".sh
